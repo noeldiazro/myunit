@@ -3,6 +3,7 @@ package myunit;
 import java.lang.reflect.Method;
 import java.util.Set;
 import junit.framework.TestCase;
+import java.util.Iterator;
 
 public class TestRunnerTest extends TestCase {
     private TestRunner runner;
@@ -27,13 +28,32 @@ public class TestRunnerTest extends TestCase {
 		      "testMethod_A",
 		      "testMethod_B",
 		      "anotherTestMethod");
-		      
+    }
+
+    public void testGetTestMethods_IgnoreMethod() {
+	runner = new TestRunner(IgnoreMethodTestClass.class);
+	assertMethods(runner.getTestMethods(),
+		      "testMethod_A",
+		      "testMethod_B",
+		      "anotherTestMethod");
     }
     
     private void assertMethods(Set<Method> retrievedMethods, String... expectedMethodNames) {
 	assertEquals(expectedMethodNames.length, retrievedMethods.size());
     }
 
+    public void testIgnoreReason() {
+	runner = new TestRunner(IgnoreMethodTestClass.class);
+	Set<IgnoredMethod> ignoredMethods = runner.getIgnoredMethods();
+	IgnoredMethod ignoredMethod = getSetElement(ignoredMethods);
+	assertEquals("testMethodToIgnore", ignoredMethod.getName());
+	assertEquals("WIP", ignoredMethod.getReasonForIgnoring());
+    }
+
+    private <T> T getSetElement(Set<T> set) {
+	Iterator<T> iterator = set.iterator();
+	return iterator.next();
+    }
 }
 
 class NoTestMethodsTestClass {
@@ -55,4 +75,10 @@ class MultipleTestMethodsTestClass extends OneTestMethodTestClass {
     @TestMethod public void testMethod_B() {}
 
     @TestMethod public void anotherTestMethod() {}
+}
+
+class IgnoreMethodTestClass extends MultipleTestMethodsTestClass {
+
+    @Ignore("WIP")
+    @TestMethod public void testMethodToIgnore() {}
 }
