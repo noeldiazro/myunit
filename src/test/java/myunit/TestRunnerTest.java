@@ -47,7 +47,9 @@ public class TestRunnerTest extends TestCase {
 	Set<IgnoredMethod> ignoredMethods = runner.getIgnoredMethods();
 	IgnoredMethod ignoredMethod = getSetElement(ignoredMethods);
 	assertEquals("testMethodToIgnore", ignoredMethod.getName());
-	assertEquals("WIP", ignoredMethod.getReasonForIgnoring());
+	String[] reasons = ignoredMethod.getReasonsForIgnoring();
+	
+	assertEquals("WIP", ignoredMethod.getReasonsForIgnoring()[0]);
     }
 
     private <T> T getSetElement(Set<T> set) {

@@ -3,13 +3,15 @@ package myunit;
 import junit.framework.TestCase;
 
 public class IgnoredMethodTest extends TestCase {
-    public static final String REASON = "WIP";
+    public static final String REASON1 = "WIP";
+    public static final String REASON2 = "Burnout";
     
     public void testCreation() throws NoSuchMethodException {
 	final String methodName = "ignoredTestMethod";
 	final IgnoredMethod ignoredMethod = new IgnoredMethod(TestClass.class.getMethod(methodName));
 	assertEquals(methodName, ignoredMethod.getName());
-	assertEquals(REASON, ignoredMethod.getReasonForIgnoring());
+	String[] reasons = ignoredMethod.getReasonsForIgnoring();
+	assertEquals(REASON1, reasons[0]);
     }
 
     public void testCreation_NotTestMethod() throws NoSuchMethodException {
@@ -18,7 +20,7 @@ public class IgnoredMethodTest extends TestCase {
 }
 
 class TestClass {
-    @Ignore(IgnoredMethodTest.REASON)
+    @Ignore({IgnoredMethodTest.REASON1, IgnoredMethodTest.REASON2})
     @TestMethod public void ignoredTestMethod() {}
 
     public void notATestMethod() {}

@@ -13,7 +13,7 @@ class IgnoredMethod {
 	return method.getName();
     }
 
-    String getReasonForIgnoring() {
+    String[] getReasonsForIgnoring() {
 	Ignore annotation = method.getAnnotation(Ignore.class);
 	return annotation.value();
     }
