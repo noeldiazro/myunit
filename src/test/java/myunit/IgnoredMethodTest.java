@@ -16,8 +16,10 @@ public class IgnoredMethodTest extends TestCase {
 	assertEquals("ndr", ignoredMethod.getInitials());
     }
 
-    public void testCreation_NotTestMethod() throws NoSuchMethodException {
-
+    public void testDefaultReason() throws NoSuchMethodException {
+	final String methodName = "defaultReasonForIgnoring";
+	final IgnoredMethod ignoredMethod = new IgnoredMethod(TestClass.class.getMethod(methodName));
+	assertEquals(Ignore.DEFAULT_REASON, ignoredMethod.getReasonsForIgnoring()[0]);
     }
 }
 
@@ -26,5 +28,7 @@ class TestClass {
     @TestMethod public void ignoredTestMethod() {}
 
     public void notATestMethod() {}
-}
 
+    @Ignore(initials="ndr")
+    public void defaultReasonForIgnoring() {}
+}
