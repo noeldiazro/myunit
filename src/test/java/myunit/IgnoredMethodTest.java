@@ -12,6 +12,8 @@ public class IgnoredMethodTest extends TestCase {
 	assertEquals(methodName, ignoredMethod.getName());
 	String[] reasons = ignoredMethod.getReasonsForIgnoring();
 	assertEquals(REASON1, reasons[0]);
+	assertEquals(REASON2, reasons[1]);
+	assertEquals("ndr", ignoredMethod.getInitials());
     }
 
     public void testCreation_NotTestMethod() throws NoSuchMethodException {
@@ -20,7 +22,7 @@ public class IgnoredMethodTest extends TestCase {
 }
 
 class TestClass {
-    @Ignore({IgnoredMethodTest.REASON1, IgnoredMethodTest.REASON2})
+    @Ignore(reasons={IgnoredMethodTest.REASON1, IgnoredMethodTest.REASON2}, initials="ndr")
     @TestMethod public void ignoredTestMethod() {}
 
     public void notATestMethod() {}

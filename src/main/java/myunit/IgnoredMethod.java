@@ -14,7 +14,10 @@ class IgnoredMethod {
     }
 
     String[] getReasonsForIgnoring() {
-	Ignore annotation = method.getAnnotation(Ignore.class);
-	return annotation.value();
+	return  method.getAnnotation(Ignore.class).reasons();
+    }
+
+    String getInitials() {
+	return method.getAnnotation(Ignore.class).initials();
     }
 }

@@ -81,6 +81,6 @@ class MultipleTestMethodsTestClass extends OneTestMethodTestClass {
 
 class IgnoreMethodTestClass extends MultipleTestMethodsTestClass {
 
-    @Ignore("WIP")
+    @Ignore(reasons="WIP", initials="ndr")
     @TestMethod public void testMethodToIgnore() {}
 }
